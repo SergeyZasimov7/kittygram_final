@@ -1,14 +1,17 @@
-# flake8: noqa
 import os
+from dotenv import load_dotenv
 from pathlib import Path
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+SECRET_KEY = os.getenv('SECRET_KEY') 
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '158.160.64.88', 'infra.sytes.net']
+ALLOWED_HOSTS_STRING = os.getenv('ALLOWED_HOSTS', '')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STRING.split(',')]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,20 +59,14 @@ WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        # Меняем настройку Django: теперь для работы будет использоваться
-        # бэкенд postgresql
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'django'),
-        'USER': os.getenv('POSTGRES_USER', 'django'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', 5432)
+        'ENGINE': 'django.db.backends.sqlite3' if os.getenv('USE_SQLITE', False) else 'django.db.backends.postgresql',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3') if os.getenv('USE_SQLITE', False) else os.getenv('POSTGRES_DB', 'django'),
+        'USER': os.getenv('POSTGRES_USER', 'django') if not os.getenv('USE_SQLITE', False) else None,
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '') if not os.getenv('USE_SQLITE', False) else None,
+        'HOST': os.getenv('DB_HOST', '') if not os.getenv('USE_SQLITE', False) else None,
+        'PORT': os.getenv('DB_PORT', 5432) if not os.getenv('USE_SQLITE', False) else None,
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -88,7 +85,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'RU'
 
 USE_I18N = True
 

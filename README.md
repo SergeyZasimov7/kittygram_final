@@ -1,26 +1,48 @@
-#  Как работать с репозиторием финального задания
+[![GitHub Actions](https://github.com/SergeyZasimov7/kittygram_final/actions/workflows/kittygram_workflow.yml/badge.svg)](https://github.com/SergeyZasimov7/kittygram_final/actions)
 
-## Что нужно сделать
+Kittygram - это веб-приложение, созданное для любителей кошек, чтобы делиться своими фотографиями пушистых питомцев.  Пользователи могут:
 
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
+Загружать фотографии своих кошек.
+Добавлять описания к фотографиям.
+Просматривать фотографии других пользователей.
+Подписываться на других пользователей и следить за их обновлениями.
+Оставлять комментарии к фотографиям.
 
-## Как проверить работу с помощью автотестов
+### Стек технологий
 
-В корне репозитория создайте файл tests.yml со следующим содержимым:
-```yaml
-repo_owner: ваш_логин_на_гитхабе
-kittygram_domain: полная ссылка (https://доменное_имя) на ваш проект Kittygram
-taski_domain: полная ссылка (https://доменное_имя) на ваш проект Taski
-dockerhub_username: ваш_логин_на_докерхабе
-```
+Backend: Python (Flask), PostgreSQL
+Frontend: HTML, CSS, JavaScript
+Инфраструктура: Docker, GitHub Actions, Nginx 
 
-Скопируйте содержимое файла `.github/workflows/main.yml` в файл `kittygram_workflow.yml` в корневой директории проекта.
+### Как развернуть проект
 
-Для локального запуска тестов создайте виртуальное окружение, установите в него зависимости из backend/requirements.txt и запустите в корневой директории проекта `pytest`.
+1. Клонируйте репозиторий:
+git clone https://github.com/SergeyZasimov7/kittygram_final
 
-## Чек-лист для проверки перед отправкой задания
 
-- Проект Taski доступен по доменному имени, указанному в `tests.yml`.
-- Проект Kittygram доступен по доменному имени, указанному в `tests.yml`.
-- Пуш в ветку main запускает тестирование и деплой Kittygram, а после успешного деплоя вам приходит сообщение в телеграм.
-- В корне проекта есть файл `kittygram_workflow.yml`.
+2. Создайте виртуальное окружение:
+python3 -m venv venv
+source venv/Scripts/activate
+
+
+3. Установите зависимости:
+pip install -r backend/requirements.txt
+
+
+4. Заполните файл .env:
+# PostgreSQL connection details
+POSTGRES_DB=your_db
+POSTGRES_USER=your_db_user
+POSTGRES_PASSWORD=your_db_password
+DB_NAME=your_db
+
+# Secret key for Flask
+SECRET_KEY=your_secret_key
+
+5. В корневой папке выполнить следующую команду:
+docker compose -f docker-compose.yml up -d 
+
+
+### Автор
+
+ - [Сергей Засимов](https://github.com/SergeyZasimov7)

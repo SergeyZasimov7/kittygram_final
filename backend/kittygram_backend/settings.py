@@ -60,12 +60,24 @@ WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3' if os.getenv('USE_SQLITE', False) else 'django.db.backends.postgresql',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3') if os.getenv('USE_SQLITE', False) else os.getenv('POSTGRES_DB', 'django'),
-        'USER': os.getenv('POSTGRES_USER', 'django') if not os.getenv('USE_SQLITE', False) else None,
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '') if not os.getenv('USE_SQLITE', False) else None,
-        'HOST': os.getenv('DB_HOST', '') if not os.getenv('USE_SQLITE', False) else None,
-        'PORT': os.getenv('DB_PORT', 5432) if not os.getenv('USE_SQLITE', False) else None,
+        'ENGINE': 'django.db.backends.sqlite3'
+        if os.getenv('USE_SQLITE', False)
+        else 'django.db.backends.postgresql',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+        if os.getenv('USE_SQLITE', False)
+        else os.getenv('POSTGRES_DB', 'django'),
+        'USER': os.getenv('POSTGRES_USER', 'django')
+        if not os.getenv('USE_SQLITE', False)
+        else None,
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '')
+        if not os.getenv('USE_SQLITE', False)
+        else None,
+        'HOST': os.getenv('DB_HOST', '')
+        if not os.getenv('USE_SQLITE', False)
+        else None,
+        'PORT': os.getenv('DB_PORT', 5432)
+        if not os.getenv('USE_SQLITE', False)
+        else None,
     }
 }
 
@@ -112,6 +124,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }

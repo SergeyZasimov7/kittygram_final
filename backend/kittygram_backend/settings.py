@@ -12,8 +12,6 @@ DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS]
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,28 +56,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3'
-        if os.getenv('USE_SQLITE', False)
-        else 'django.db.backends.postgresql',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
-        if os.getenv('USE_SQLITE', False)
-        else os.getenv('POSTGRES_DB', 'django'),
-        'USER': os.getenv('POSTGRES_USER', 'django')
-        if not os.getenv('USE_SQLITE', False)
-        else None,
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '')
-        if not os.getenv('USE_SQLITE', False)
-        else None,
-        'HOST': os.getenv('DB_HOST', '')
-        if not os.getenv('USE_SQLITE', False)
-        else None,
-        'PORT': os.getenv('DB_PORT', 5432)
-        if not os.getenv('USE_SQLITE', False)
-        else None,
+if os.getenv('USE_SQLITE', False):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'USER': None,
+            'PASSWORD': None,
+            'HOST': None,
+            'PORT': None,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB', 'django'),
+            'USER': os.getenv('POSTGRES_USER', 'django'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+            'HOST': os.getenv('DB_HOST', ''),
+            'PORT': os.getenv('DB_PORT', 5432),
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {

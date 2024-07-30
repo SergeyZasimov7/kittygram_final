@@ -1,4 +1,4 @@
-[![GitHub Actions](https://github.com/SergeyZasimov7/kittygram_final/actions/workflows/kittygram_workflow.yml/badge.svg)](https://github.com/SergeyZasimov7/kittygram_final/actions)
+[![GitHub Actions](https://github.com/SergeyZasimov7/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/SergeyZasimov7/kittygram_final/actions)
 
 Kittygram - это веб-приложение, созданное для любителей кошек, чтобы делиться своими фотографиями пушистых питомцев.  Пользователи могут:
 
